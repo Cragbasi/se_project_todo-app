@@ -2,7 +2,13 @@ import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 import { initialTodos, validationConfig } from "../utils/constants.js";
 import { ToDo } from "../components/Todo.js";
 export { openModal, closeModal };
-import { addTodoPopup, addTodoForm, todosList } from "../utils/constants.js";
+import {
+  addTodoButton,
+  addTodoCloseBtn,
+  addTodoPopup,
+  addTodoForm,
+  todosList,
+} from "../utils/constants.js";
 
 import { FormValidator } from "../components/FormValidator.js";
 
@@ -15,31 +21,50 @@ const closeModal = (modal) => {
 };
 
 const formElement = document.querySelector(validationConfig.formSelector);
-const validation = new FormValidator(validationConfig, formElement);
-validation.enableValidation();
+const todoFormValidator = new FormValidator(validationConfig, formElement);
+todoFormValidator.enableValidation();
+
+// function generateTodo(data) {
+//   if (Array.isArray(data)) {
+//     data.forEach((initialTodo) => {
+//       const todo = new ToDo(initialTodo, ".todo");
+
+//       const todoElement = todo.getView();
+
+//       // Add to the DOM
+//       todosList.append(todoElement);
+//     });
+//   } else {
+//     const todo = new ToDo(data, ".todo");
+//     const todoElement = todo.getView();
+//     // Add to the DOM
+//     todosList.append(todoElement);
+//     //  reset the form’s inputs.
+//     const resetFormElement = new FormValidator(validationConfig, formElement);
+//     resetFormElement.resetValidation();
+//   }
+// }
 
 function generateTodo(data) {
-  if (Array.isArray(data)) {
-    data.forEach((initialTodo) => {
-      const todo = new ToDo(initialTodo, ".todo");
-
-      const todoElement = todo.getView();
-
-      // Add to the DOM
-      todosList.append(todoElement);
-    });
-  } else {
-    const todo = new ToDo(data, ".todo");
-    const todoElement = todo.getView();
-    // Add to the DOM
-    todosList.append(todoElement);
-    //  reset the form’s inputs.
-    const resetFormElement = new FormValidator(validationConfig, formElement);
-    resetFormElement.resetValidation();
-  }
+  const todo = new ToDo(data, ".todo");
+  const todoElement = todo.getView();
+  // Add to the DOM
+  todosList.append(todoElement);
 }
 
-generateTodo(initialTodos);
+function renderTodos(data) {
+  data.forEach((initialTodo) => {
+    generateTodo(initialTodo);
+  });
+}
+renderTodos(initialTodos);
+
+function renderTodo(data) {
+  generateTodo(data);
+  //  reset the form’s inputs.
+
+  todoFormValidator.resetValidation();
+}
 
 addTodoForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
@@ -52,8 +77,7 @@ addTodoForm.addEventListener("submit", (evt) => {
   date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 
   const values = { name, date, id };
-  const todo = generateTodo(values);
-  // todosList.append(todo);
+  renderTodo(values);
   closeModal(addTodoPopup);
 });
 
@@ -153,13 +177,13 @@ addTodoForm.addEventListener("submit", (evt) => {
 //   }
 // }
 
-// addTodoButton.addEventListener("click", () => {
-//   openModal(addTodoPopup);
-// });
+addTodoButton.addEventListener("click", () => {
+  openModal(addTodoPopup);
+});
 
-// addTodoCloseBtn.addEventListener("click", () => {
-//   closeModal(addTodoPopup);
-// });
+addTodoCloseBtn.addEventListener("click", () => {
+  closeModal(addTodoPopup);
+});
 
 // addTodoForm.addEventListener("submit", (evt) => {
 //   evt.preventDefault();

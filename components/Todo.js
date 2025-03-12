@@ -1,12 +1,3 @@
-import {
-  todoTemplate,
-  addTodoButton,
-  addTodoCloseBtn,
-  addTodoPopup,
-} from "../utils/constants.js";
-
-import { openModal, closeModal } from "../pages/index.js";
-
 export class ToDo {
   constructor(data, selector) {
     this._selector = selector;
@@ -17,24 +8,25 @@ export class ToDo {
   }
 
   _getTemplate() {
-    const todoElement = todoTemplate.content
-      .querySelector(this._selector)
+    const todoElement = document
+      .querySelector("#todo-template")
+      .content.querySelector(this._selector)
       .cloneNode(true);
     return todoElement;
   }
   getView() {
     this._todoElement = this._getTemplate();
     const todoNameEl = this._todoElement.querySelector(".todo__name");
-    const todoCheckboxEl = this._todoElement.querySelector(".todo__completed");
+    this.todoCheckboxEl = this._todoElement.querySelector(".todo__completed");
     const todoLabel = this._todoElement.querySelector(".todo__label");
     const todoDate = this._todoElement.querySelector(".todo__date");
     // const todoDeleteBtn = this._todoElement.querySelector(".todo__delete-btn");
     this._setEventListeners();
     todoNameEl.textContent = this._name;
-    todoCheckboxEl.checked = this._completed;
+    this.todoCheckboxEl.checked = this._completed;
     // Apply id and for attributes.
     // The id will initially be undefined for new todos.
-    todoCheckboxEl.id = `todo-${this._id}`;
+    this.todoCheckboxEl.id = `todo-${this._id}`;
     todoLabel.setAttribute("for", `todo-${this._id}`);
 
     // If a due date has been set, parsing this it with `new Date` will return a
@@ -55,13 +47,9 @@ export class ToDo {
     todoDeleteBtn.addEventListener("click", () => {
       this._todoElement.remove();
     });
-
-    addTodoButton.addEventListener("click", () => {
-      openModal(addTodoPopup);
-    });
-
-    addTodoCloseBtn.addEventListener("click", () => {
-      closeModal(addTodoPopup);
+    this.todoCheckboxEl.addEventListener("change", () => {
+      this._completed = this.todoCheckboxEl.checked;
+      console.log(this.todoCheckboxEl.checked);
     });
   }
 }
