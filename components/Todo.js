@@ -9,8 +9,8 @@ export class ToDo {
 
   _getTemplate() {
     const todoElement = document
-      .querySelector("#todo-template")
-      .content.querySelector(this._selector)
+      .querySelector(this._selector)
+      .content.querySelector(".todo")
       .cloneNode(true);
     return todoElement;
   }
