@@ -50,8 +50,6 @@ function renderTodo(data) {
   const todoElement = generateTodo(data);
 
   todosList.append(todoElement);
-  //  reset the form’s inputs.
-  todoFormValidator.resetValidation();
 }
 
 addTodoForm.addEventListener("submit", (evt) => {
@@ -67,6 +65,8 @@ addTodoForm.addEventListener("submit", (evt) => {
   const values = { name, date, id };
   renderTodo(values);
   closeModal(addTodoPopup);
+  //  reset the form’s inputs.
+  todoFormValidator.resetValidation();
 });
 
 // function generateTodo(data) {
