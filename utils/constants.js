@@ -34,6 +34,7 @@ const addTodoForm = addTodoPopup.querySelector(".popup__form");
 const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
 const todoTemplate = document.querySelector("#todo-template");
 const todosList = document.querySelector(".todos__list");
+const counterText = document.querySelector(".counter__text");
 
 export { initialTodos, validationConfig };
 export {
@@ -43,4 +44,5 @@ export {
   addTodoCloseBtn,
   todoTemplate,
   todosList,
+  counterText,
 };
