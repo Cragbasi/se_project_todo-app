@@ -1,4 +1,4 @@
-import Popup from "../components/Popup.js";
+import Popup from "./Popup.js";
 
 // It accepts two arguments: the popup selector
 // and a callback function, which PopupWithForm calls when the form’s submit event fires.

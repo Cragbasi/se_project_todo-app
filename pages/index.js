@@ -13,9 +13,9 @@ import {
 
 import { FormValidator } from "../components/FormValidator.js";
 // import Popup from "../components/Popup.js";
-import PopupWithForm from "../utils/PopupWithForm.js";
-import Section from "../utils/Section.js";
-import TodoCounter from "../utils/TodoCounter.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import Section from "../components/Section.js";
+import TodoCounter from "../components/TodoCounter.js";
 
 const todoCount = new TodoCounter(initialTodos, counterText);
 todoCount.updateTotal();
