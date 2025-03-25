@@ -1,4 +1,4 @@
-// import { v4 as uuidv4 } from "https://jspm.dev/uuid";
+import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 import { initialTodos, validationConfig } from "../utils/constants.js";
 import { ToDo } from "../components/Todo.js";
 // export { openModal, closeModal };
@@ -12,7 +12,7 @@ import {
 } from "../utils/constants.js";
 
 import { FormValidator } from "../components/FormValidator.js";
-import Popup from "../utils/Popup.js";
+// import Popup from "../components/Popup.js";
 import PopupWithForm from "../utils/PopupWithForm.js";
 import Section from "../utils/Section.js";
 import TodoCounter from "../utils/TodoCounter.js";
@@ -21,28 +21,39 @@ const todoCount = new TodoCounter(initialTodos, counterText);
 todoCount.updateTotal();
 
 addTodoButton.addEventListener("click", () => {
-  const openPopup = new Popup(addTodoPopup);
-  openPopup.open();
+  todoPopup.open();
 });
 
 // creating a new todo when the form is submitted
-const popupWithForm = new PopupWithForm(addTodoPopup, (item) => {
-  const todoElement = generateTodo(item);
+const todoPopup = new PopupWithForm(
+  "#add-todo-popup",
+  (item) => {
+    renderTodo(item);
 
+    // Reset form validation
+    todoFormValidator.resetValidation();
+  },
+  uuidv4(),
+  // Create a date object
+  (date) => {
+    const dateObject = new Date(date);
+    console.log(dateObject);
+    return dateObject;
+  }
+);
+todoPopup.setEventListeners();
+
+const renderTodo = (item) => {
+  const todo = generateTodo(item);
   // Append to todo list
-  todoList.addItem(todoElement);
-
-  // Reset form validation
-  todoFormValidator.resetValidation();
-});
-popupWithForm.setEventListeners();
+  todoList.addItem(todo);
+};
 
 //  rendering each initial todo from initialTodos array
 const todoList = new Section({
   items: initialTodos,
   renderer: (item) => {
-    const todoElement = generateTodo(item);
-    todoList.addItem(todoElement);
+    renderTodo(item);
   },
   containerSelector: todosList,
 });
