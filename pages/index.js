@@ -25,22 +25,14 @@ addTodoButton.addEventListener("click", () => {
 });
 
 // creating a new todo when the form is submitted
-const todoPopup = new PopupWithForm(
-  "#add-todo-popup",
-  (item) => {
-    renderTodo(item);
+const todoPopup = new PopupWithForm("#add-todo-popup", (item) => {
+  item["id"] = uuidv4();
+  // console.log(item);
+  renderTodo(item);
 
-    // Reset form validation
-    todoFormValidator.resetValidation();
-  },
-  uuidv4(),
-  // Create a date object
-  (date) => {
-    const dateObject = new Date(date);
-    console.log(dateObject);
-    return dateObject;
-  }
-);
+  // Reset form validation
+  todoFormValidator.resetValidation();
+});
 todoPopup.setEventListeners();
 
 const renderTodo = (item) => {
